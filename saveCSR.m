@@ -4,10 +4,10 @@ function saveCSR(config,membMap,msg)
     filename = [path,file];
     data = cell(max(20,size(membMap,1)+7),4+size(membMap,1));
     data{1,1} = 'Model';
-    data(2,1:2) = {'Membership Cost',config.Model.club_membership_cost};
+    data(2,1:2) = {'Partnership Cost',config.Model.club_membership_cost};
     data(3,1:2) = {'Delta',config.Model.delta};
-    data(4:6,1:2) = {'w_1',config.Model.w(1);...
-        'w_2',config.Model.w(2);'w_3',config.Model.w(3)};
+    data(4:6,1:2) = {'w^h_h',config.Model.w(1);...
+        'w^h_l',config.Model.w(2);'w^l_l',config.Model.w(3)};
     data{8,1} = 'Environment';
     data(9,1:2) = {'number of Agents',config.Environment.number_of_agents};
     color = find(config.Model.color == 2);
@@ -88,7 +88,7 @@ function saveCSR(config,membMap,msg)
     hRange.Columns.Item('A:B').EntireColumn.AutoFit;
     %     catch
     %     end
-    first = ['D' num2str(1+color(1))];
+    first = ['A6,D' num2str(1+color(1))];
     for i = 2:length(color)
         first = [first,',D' ,num2str(1+color(i))];
     end

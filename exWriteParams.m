@@ -47,7 +47,10 @@ function exWriteParams(filename, params)
     hRange.Interior.Color = 15773696; % light blue
     % Auto fit first 2 columns
     hRange.Columns.Item('A:B').EntireColumn.AutoFit;
-
+    hRange = hSheet.Range('A6');
+    hRange.Interior.Colorindex = 3;
+    hRange = hSheet.Range('A4');
+    hRange.Interior.Color = 15773696;;
     %% Save:
     if newFile
         hWorkbook.SaveAs(filename, 51); % 51 = xlOpenXMLWorkbook

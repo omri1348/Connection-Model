@@ -42,13 +42,13 @@ function xlswriteParams(filename, params,nAgents,color)
     hRange.Interior.Pattern = 1; %xlSolid
     hRange.Interior.Color = 12566463; % Gray
     % Color Blue:
-    hRange = hSheet.Range(['A1,A8,A11,D2:D',num2str(1+nAgents)]);
+    hRange = hSheet.Range(['A1,A4,A8,A11,D2:D',num2str(1+nAgents)]);
     hRange.Font.Bold = true;
     hRange.Interior.Color = 15773696; % light blue
     % Auto fit first 2 columns
     hRange.Columns.Item('A:B').EntireColumn.AutoFit;
     
-    first = ['D' num2str(1+color(1))];
+    first = ['A6,D' num2str(1+color(1))];
     for i = 2:length(color)
         first = [first,',D' ,num2str(1+color(i))];
     end

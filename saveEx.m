@@ -4,10 +4,10 @@ function saveEx(config,stableEnvs)
     nAgents = config.Environment.number_of_agents;
     data = cell(max(14,size(nAgents,1)+2),5);
     data{1,1} = 'Model';
-    data(2,1:2) = {'Membership Cost',config.Model.club_membership_cost};
+    data(2,1:2) = {'Partnership Cost',config.Model.club_membership_cost};
     data(3,1:2) = {'Delta',config.Model.delta};
-    data(4:6,1:2) = {'w_1',config.Model.w(1);...
-        'w_2',config.Model.w(2);'w_3',config.Model.w(3)};
+    data(4:6,1:2) = {'w^h_h',config.Model.w(1);...
+        'w^h_l',config.Model.w(2);'w^l_l',config.Model.w(3)};
     data{8,1} = 'Environment';
     data(9,1:2) = {'Number of Agents',config.Environment.number_of_agents};
     exWriteParams(filename, data)
