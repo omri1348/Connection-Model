@@ -47,14 +47,16 @@ function xlswriteParams(filename, params,nAgents,color)
     hRange.Interior.Color = 15773696; % light blue
     % Auto fit first 2 columns
     hRange.Columns.Item('A:B').EntireColumn.AutoFit;
-    
-    first = ['A6,D' num2str(1+color(1))];
-    for i = 2:length(color)
-        first = [first,',D' ,num2str(1+color(i))];
+    first = 'A6';
+    if ~isempty(color)
+        first = [first,',D' num2str(1+color(1))];
+        for i = 2:length(color)
+            first = [first,',D' ,num2str(1+color(i))];
+        end
+
     end
     hRange = hSheet.Range(first);
     hRange.Interior.Colorindex = 3; % red
-
     %% Save:
     if newFile
         hWorkbook.SaveAs(filename, 51); % 51 = xlOpenXMLWorkbook

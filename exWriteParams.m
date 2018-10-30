@@ -50,7 +50,7 @@ function exWriteParams(filename, params)
     hRange = hSheet.Range('A6');
     hRange.Interior.Colorindex = 3;
     hRange = hSheet.Range('A4');
-    hRange.Interior.Color = 15773696;;
+    hRange.Interior.Color = 15773696;
     %% Save:
     if newFile
         hWorkbook.SaveAs(filename, 51); % 51 = xlOpenXMLWorkbook

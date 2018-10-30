@@ -18,7 +18,7 @@ function exWriteEnvs(filename,stableEnvs,i,nAgents)
         hSheet = hSheets.Add([], hSheets.Item(hSheets.Count));
     end
    
-    hSheet.Name = [num2str(i),' Color Environments'];
+    hSheet.Name = [num2str(i-1),' Color Environments'];
     start = 1;
     value = xlsColNum2Str(nAgents+1);
     for k = 1:size(stableEnvs,1)
@@ -28,12 +28,14 @@ function exWriteEnvs(filename,stableEnvs,i,nAgents)
         hRange = hSheet.Range(['A',num2str(start+1),':A',num2str(start+nAgents)]);
         hRange.Interior.Color = 15773696;
         index = find(stableEnvs{k,2} == 2);
+        if ~isempty(index)
         color_range = ['A',num2str(index(1)+start)];
         for l = 2:length(index)
             color_range = [color_range,',A',num2str(index(l)+start)];
         end
         hRange = hSheet.Range(color_range);
         hRange.Interior.Colorindex = 3; % red
+        end
         start = start+nAgents+2;
     end
 

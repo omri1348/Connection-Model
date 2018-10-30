@@ -2,13 +2,44 @@ function exhaustive(config)
 % The function runs the exhaustive algorithm (works for 5 to 9 agents)
     tic
     nAgents = double(config.Environment.number_of_agents);
-    stableEnvs = cell(1,nAgents-1);
+    stableEnvs = cell(1,nAgents+1);
     base_c = ones(1,nAgents);
     base_m = zeros(nAgents,nAgents);
     load([num2str(nAgents),'\new data ',num2str(nAgents),'.mat'])
     counter = 0;
     f = waitbar(counter/(length(data)*floor(nAgents/2)),'Processing');
     % going all over the color sizes
+    % all high type and low
+    for k = 1:length(data)
+        tmp_m = data{k};
+        for j = 1:size(tmp_m,1)
+            map = base_m;
+            map(tmp_m(j,:)) = 1;
+            map = map + map';
+            config.Model.color = base_c;
+            [stability, ~] = AnalyzeConfig(config, map,getColorMat(config));
+            if stability
+                if isempty(stableEnvs{1})
+                    stableEnvs{1} = cell(1);
+                    stableEnvs{1}(1,1:2) = {map,config.Model.color};
+                else
+                    stableEnvs{1}(size(stableEnvs{1},1)+1,1:2) =...
+                        {map,config.Model.color};
+                end
+            end
+            config.Model.color = 3-config.Model.color;
+            [stability, ~] = AnalyzeConfig(config, map,getColorMat(config));
+            if stability
+                if isempty(stableEnvs{nAgents+1})
+                    stableEnvs{nAgents+1} = cell(1);
+                    stableEnvs{nAgents+1}(1,1:2) = {map,config.Model.color};
+                else
+                    stableEnvs{nAgents+1}(size(stableEnvs{nAgents+1},1)+1,1:2) =...
+                        {map,config.Model.color};
+                end
+            end
+        end
+    end
     for i = 1:floor(nAgents/2)
         load([num2str(nAgents),'\color_set ',num2str(i),'.mat'])
         % going over the environment sizes
@@ -31,11 +62,11 @@ function exhaustive(config)
                     % checking stability
                     [stability, ~] = AnalyzeConfig(config, map,getColorMat(config));
                     if stability
-                        if isempty(stableEnvs{i})
-                            stableEnvs{i} = cell(1);
-                            stableEnvs{i}(1,1:2) = {map,config.Model.color};
+                        if isempty(stableEnvs{i+1})
+                            stableEnvs{i+1} = cell(1);
+                            stableEnvs{i+1}(1,1:2) = {map,config.Model.color};
                         else
-                            stableEnvs{i}(size(stableEnvs{i},1)+1,1:2) =...
+                            stableEnvs{i+1}(size(stableEnvs{i+1},1)+1,1:2) =...
                                 {map,config.Model.color};
                         end
                     end
@@ -43,11 +74,11 @@ function exhaustive(config)
                         config.Model.color = 3-config.Model.color;
                         [stability, ~] = AnalyzeConfig(config, map,getColorMat(config));
                         if stability
-                            if isempty(stableEnvs{nAgents-i})
-                                stableEnvs{nAgents-i} = cell(1);
-                                stableEnvs{nAgents-i}(1,1:2) = {map,config.Model.color};
+                            if isempty(stableEnvs{nAgents-i+1})
+                                stableEnvs{nAgents-i+1} = cell(1);
+                                stableEnvs{nAgents-i+1}(1,1:2) = {map,config.Model.color};
                             else
-                                stableEnvs{nAgents-i}(size(stableEnvs{nAgents-i},1)+1,1:2) =...
+                                stableEnvs{nAgents-i+1}(size(stableEnvs{nAgents-i+1},1)+1,1:2) =...
                                     {map,config.Model.color};
                             end
                         end
